@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E03779AE-349F-4964-9614-3E513C2E228F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BFDataCrawler</RootNamespace>
+    <AssemblyName>BFDataCrawler</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>stack.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\MachineTypeBLL.cs" />
+    <Compile Include="BLL\SPH_PT_BLL.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="CustomControl\CustomGridPanel.cs" />
+    <Compile Include="DAL\MachineTypeDAL.cs" />
+    <Compile Include="DAL\SPH_PT_DAL.cs" />
+    <Compile Include="DataProviders\OracleProvider.cs" />
+    <Compile Include="Helpers\CookieAwareWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\HideRowsConverter.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\ListExtensions.cs" />
+    <Compile Include="Helpers\MultiCommandParamsConverter.cs" />
+    <Compile Include="Helpers\SPCMailHelper.cs" />
+    <Compile Include="Helpers\TextToPasswordCharConverter.cs" />
+    <Compile Include="Helpers\WebDriverHelper.cs" />
+    <Compile Include="Model\MachineTypeModel.cs" />
+    <Compile Include="UC\BWCNCHob10_UC.xaml.cs">
+      <DependentUpon>BWCNCHob10_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\BWCNCHob9_UC.xaml.cs">
+      <DependentUpon>BWCNCHob9_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\BWHob11_UC.xaml.cs">
+      <DependentUpon>BWHob11_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\BWHob12_UC.xaml.cs">
+      <DependentUpon>BWHob12_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\BWNoHob_UC.xaml.cs">
+      <DependentUpon>BWNoHob_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\BWCNCViewModel.cs" />
+    <Compile Include="View\MainWindow2.xaml.cs">
+      <DependentUpon>MainWindow2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManufaCrawlerWindow.xaml.cs">
+      <DependentUpon>ManufaCrawlerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewDetail\BWWindow.xaml.cs">
+      <DependentUpon>BWWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewDetail\CNCWindow.xaml.cs">
+      <DependentUpon>CNCWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewDetail\OrderInfoUC.xaml.cs">
+      <DependentUpon>OrderInfoUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VMSubFunctions\BWCNCSubFunctions.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BLL\OrderBLL.cs" />
+    <Compile Include="DAL\OrderDAL.cs" />
+    <Compile Include="DataProviders\MySQLProvider.cs" />
+    <Compile Include="DataProviders\SQLProvider.cs" />
+    <Compile Include="Helpers\ExtensionFunctions.cs" />
+    <Compile Include="Helpers\GeneralUtility.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Model\OrderModel.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="Javascript\Ko_Extension.min.js.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="System\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Javascript\knockout.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Javascript\Ko_Extension.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Javascript\Ko_Extension.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.77.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.77.0.0\build\Selenium.Chrome.WebDriver.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.77.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.77.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
+  </Target>
+  <ItemGroup>
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Unofficial.Awesomium.Complete.1.7.4.2\lib\Awesomium.Core.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Unofficial.Awesomium.Complete.1.7.4.2\lib\Awesomium.Windows.Controls.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\HtmlAgilityPack.1.11.12\lib\Net45\HtmlAgilityPack.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\PublicAssemblies\Microsoft.mshtml.dll">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </ReferencePath>
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\mscorlib.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\MVVM.awesomium.0.9.9.0\lib\MVVMAwesomium.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\MySql.Data.8.0.17\lib\net452\MySql.Data.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Oracle.ManagedDataAccess.19.6.0\lib\net40\Oracle.ManagedDataAccess.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationFramework.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\DotNetSeleniumExtras.WaitHelpers.3.11.0\lib\net45\SeleniumExtras.WaitHelpers.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Syroot.Windows.IO.KnownFolders.1.2.1\lib\net452\Syroot.KnownFolders.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.DataAnnotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ComponentModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Configuration.Install.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Drawing.Design.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Management.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Net.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Security.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Transactions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Windows.Forms.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.Linq.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll" />
+    <ReferencePath Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\UC\BWCNCHob10_UC.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\UC\BWCNCHob9_UC.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\UC\BWHob11_UC.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\UC\BWHob12_UC.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\UC\BWNoHob_UC.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\View\MainWindow.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\View\MainWindow2.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\View\ManufaCrawlerWindow.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\View\ViewDetail\BWWindow.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\View\ViewDetail\CNCWindow.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\View\ViewDetail\OrderInfoUC.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\App.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\BFDataCrawler_Content.g.cs" />
+    <Compile Include="D:\MiniProjects\WPF\BFDataCrawler\BFDataCrawler\BFDataCrawler\obj\Release\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
+</Project>

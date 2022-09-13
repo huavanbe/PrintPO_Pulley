@@ -1,0 +1,520 @@
+﻿<Window x:Class="BFDataCrawler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BFDataCrawler"
+        xmlns:vm="clr-namespace:BFDataCrawler.ViewModel"
+        xmlns:helper="clr-namespace:BFDataCrawler.Helpers"
+        mc:Ignorable="d"
+        
+        
+     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="12"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="450" Width="800"
+        Icon="/img/bfcrawling.png"
+        >
+    <Window.Resources>
+        <vm:OrderViewModel x:Key="vmOrder"/>
+        <helper:MultiCommandParamsConverter x:Key="multiCommandParamsConverter"/>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#ffff"/>
+            <Setter Property="Background" Value="#FF9969"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" DataContext="{StaticResource vmOrder}" HorizontalAlignment="Left">
+            <Button Command="{Binding CommandGetOrders}"  IsEnabled="{Binding IsGettingData}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource multiCommandParamsConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}"/>
+                        <Binding ElementName="wbBWNoHob"/>
+                        <Binding ElementName="wbBWHob"/>
+                        <Binding ElementName="wbCNCNoHob"/>
+                        <Binding ElementName="wbCNCHob"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="DatabaseSearch" VerticalAlignment="Center" Width="24" Height="24" />
+                    <TextBlock Text="Get data"/>
+                    <ProgressBar Margin="2"
+                      Style="{StaticResource MaterialDesignCircularProgressBar}"
+                      Value="0"
+                      IsIndeterminate="{Binding IsLoading}" Foreground="#F5665F" FontSize="9"/>
+                </StackPanel>
+            </Button>
+
+            <Button Content="Generate Data" Command="{Binding CommandGenerateData,Source={StaticResource vmOrder}}"/>
+        </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" DataContext="{StaticResource vmOrder}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <!--2019-10-09 Start lock-->
+                
+                <!--<TextBlock Text="Pre-TeethShape: "/>
+                <TextBox Text="{Binding Pre_TeethShape}"/>
+                <TextBlock Text="Pre-TeethQty: "/>
+                <TextBox Text="{Binding Pre_TeethQty}"/>
+
+
+                <TextBlock Text="TeethQuantity"/>
+                <TextBox Width="100" Name="txtTeethQuantity" HorizontalContentAlignment="Right"/>
+                <TextBlock Text="TeethShape"/>
+                <TextBox Width="100" Name="txtTeethShape" HorizontalContentAlignment="Right"/>
+                <Button Content="Sort" Width="100" Command="{Binding CmdSortOrderInfo}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource multiCommandParamsConverter}">
+                            <Binding ElementName="txtTeethQuantity" Path="Text"/>
+                            <Binding ElementName="txtTeethShape" Path="Text"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>-->
+                
+                <!--2019-10-09 End lock-->
+                <TextBlock Text="{Binding MailStatus}" FontStyle="Normal"/>
+            </StackPanel>
+            
+        </Grid>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="HOB" FontSize="45">
+            <TextBlock.LayoutTransform>
+                <RotateTransform CenterX="90" CenterY="90" Angle="-90"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="NO HOB" FontSize="45">
+            <TextBlock.LayoutTransform>
+                <RotateTransform CenterX="90" CenterY="90" Angle="-90"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            
+            <DataGrid Name="dgvBWHob" Grid.Row="0" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0" ItemsSource="{Binding ListOrdersBWHob}" SelectedItem="{Binding SelectedOrderBWHob}"  IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanUserSortColumns="False" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Sales_Order_No" Binding="{Binding Sales_Order_No}"/>
+                    <DataGridTextColumn Header="Pier_Instruction_No" Binding="{Binding Pier_Instruction_No}"/>
+                    <DataGridTextColumn Header="Manufa_Instruction_No" Binding="{Binding Manufa_Instruction_No}"/>
+                    <DataGridTextColumn Header="Global_Code" Binding="{Binding Global_Code}"/>
+                    <DataGridTextColumn Header="Item_Name" Binding="{Binding Item_Name}"/>
+                    <DataGridTextColumn Header="MC" Binding="{Binding MC}"/>
+                    <DataGridTextColumn Header="Received_Date" Binding="{Binding Received_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Factory_Ship_Date" Binding="{Binding Factory_Ship_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Number_of_Orders" Binding="{Binding Number_of_Orders}"/>
+                    <DataGridTextColumn Header="Number_of_Available_Instructions" Binding="{Binding Number_of_Available_Instructions}"/>
+                    <DataGridTextColumn Header="Line" Binding="{Binding Line}"/>
+                    <DataGridTextColumn Header="Material_text1" Binding="{Binding Material_text1}"/>
+                    <DataGridTextColumn Header="Inner_Code" Binding="{Binding Inner_Code}"/>
+                    <DataGridTextColumn Header="Hobbing" Binding="{Binding Hobbing}"/>
+                    <DataGridTextColumn Header="TeethQuantity" Binding="{Binding TeethQuantity}"/>
+                    <DataGridTextColumn Header="TeethShape" Binding="{Binding TeethShape}"/>
+                    <DataGridTextColumn Binding="{Binding No}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Repairs}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Instructions}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding PayWard}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Major}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Special_Orders}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Method}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Destination}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Instructions_Print_date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_progress}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Tack_Label_Output_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Completion_Instruction_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Re_print_Count}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_issue_time}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Classify_Code}" Visibility="Collapsed"/>
+
+                </DataGrid.Columns>
+
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#7E75FF" />
+                        <Setter Property="Foreground" Value="#ffffff"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Height="50" Width="100" IsEnabled="{Binding BWHob_IsGettingData, Source={StaticResource vmOrder}}" Command="{Binding CommandBWPrintHob, Source={StaticResource vmOrder}}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource multiCommandParamsConverter}">
+                            <Binding ElementName="wbBWHob"/>
+                            <Binding ElementName="dgvBWHob"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Width="28" Height="28" />
+                        <TextBlock Text="PRINT"/>
+                        <ProgressBar Margin="2"
+                      Style="{StaticResource MaterialDesignCircularProgressBar}"
+                      Value="0"
+                      IsIndeterminate="{Binding BWHob_IsPrinting, Source={StaticResource vmOrder}}" Foreground="#F5665F" FontSize="9"/>
+                    </StackPanel>
+                </Button>
+                <Button Content="DELETE" Width="100" Command="{Binding CommandDeleteBWHob, Source={StaticResource vmOrder}}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0">
+                <TextBlock Text="Pre-TeethShape: "/>
+                <TextBlock Text="{Binding HobBW_TeethShape}"/>
+                <TextBlock Text=" | "/>
+                <TextBlock Text="Pre-TeethQuantity: "/>
+                <TextBlock Text="{Binding HobBW_TeethQty}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Text="{Binding BW_HobStatus,Source={StaticResource vmOrder}}" Foreground="#EC5370" Margin="5,0,0,0" Height="25" />
+            <TextBlock Grid.Row="4" Text="BW" HorizontalAlignment="Center" FontSize="24"/>
+        </Grid>
+        
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid Grid.Row="0" DataContext="{StaticResource vmOrder}"  Margin="5,0,0,0" ItemsSource="{Binding ListOrdersBWNoHob}" SelectedItem="{Binding SelectedOrderBWNoHob}" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanUserSortColumns="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Sales_Order_No" Binding="{Binding Sales_Order_No}"/>
+                    <DataGridTextColumn Header="Pier_Instruction_No" Binding="{Binding Pier_Instruction_No}"/>
+                    <DataGridTextColumn Header="Manufa_Instruction_No" Binding="{Binding Manufa_Instruction_No}"/>
+                    <DataGridTextColumn Header="Global_Code" Binding="{Binding Global_Code}"/>
+                    <DataGridTextColumn Header="Item_Name" Binding="{Binding Item_Name}"/>
+                    <DataGridTextColumn Header="MC" Binding="{Binding MC}"/>
+                    <DataGridTextColumn Header="Received_Date" Binding="{Binding Received_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Factory_Ship_Date" Binding="{Binding Factory_Ship_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Number_of_Orders" Binding="{Binding Number_of_Orders}"/>
+                    <DataGridTextColumn Header="Number_of_Available_Instructions" Binding="{Binding Number_of_Available_Instructions}"/>
+                    <DataGridTextColumn Header="Line" Binding="{Binding Line}"/>
+                    <DataGridTextColumn Header="Material_text1" Binding="{Binding Material_text1}"/>
+                    <DataGridTextColumn Header="Inner_Code" Binding="{Binding Inner_Code}"/>
+                    <DataGridTextColumn Header="Hobbing" Binding="{Binding Hobbing}"/>
+                    <DataGridTextColumn Header="TeethQuantity" Binding="{Binding TeethQuantity}"/>
+                    <DataGridTextColumn Header="TeethShape" Binding="{Binding TeethShape}"/>
+                    <DataGridTextColumn Binding="{Binding No}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Repairs}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Instructions}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding PayWard}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Major}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Special_Orders}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Method}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Destination}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Instructions_Print_date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_progress}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Tack_Label_Output_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Completion_Instruction_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Re_print_Count}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_issue_time}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Classify_Code}" Visibility="Collapsed"/>
+                </DataGrid.Columns>
+
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#7E75FF" />
+                        <Setter Property="Foreground" Value="#ffffff"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Height="50" Width="100" IsEnabled="{Binding BWNoHob_IsGettingData}" Command="{Binding CommandBWPrintNoHob, Source={StaticResource vmOrder}}">
+                    <Button.CommandParameter>
+                        <Binding ElementName="wbBWNoHob"/>
+                    </Button.CommandParameter>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Width="28" Height="28" />
+                        <TextBlock Text="PRINT"/>
+                        <ProgressBar Margin="2"
+                      Style="{StaticResource MaterialDesignCircularProgressBar}"
+                      Value="0"
+                      IsIndeterminate="{Binding BWNoHob_IsPrinting}" Foreground="#F5665F" FontSize="9"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0">
+                <TextBlock Text="Pre-TeethShape: "/>
+                <TextBlock Text="{Binding NoHobBW_TeethShape}"/>
+                <TextBlock Text=" | "/>
+                <TextBlock Text="Pre-TeethQuantity: "/>
+                <TextBlock Text="{Binding NoHobBW_TeethQty}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Text="{Binding BW_NoHobStatus,Source={StaticResource vmOrder}}" Foreground="#EC5370" Margin="5,0,0,0" Height="25" />
+            <TextBlock Grid.Row="4" Text="BW" HorizontalAlignment="Center" FontSize="24"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Name="dgvCNCHob" Grid.Row="0" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0" ItemsSource="{Binding ListOrdersCNCHob}" SelectedItem="{Binding SelectedOrderCNCHob}"  IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanUserSortColumns="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Sales_Order_No" Binding="{Binding Sales_Order_No}"/>
+                    <DataGridTextColumn Header="Pier_Instruction_No" Binding="{Binding Pier_Instruction_No}"/>
+                    <DataGridTextColumn Header="Manufa_Instruction_No" Binding="{Binding Manufa_Instruction_No}"/>
+                    <DataGridTextColumn Header="Global_Code" Binding="{Binding Global_Code}"/>
+                    <DataGridTextColumn Header="Item_Name" Binding="{Binding Item_Name}"/>
+                    <DataGridTextColumn Header="MC" Binding="{Binding MC}"/>
+                    <DataGridTextColumn Header="Received_Date" Binding="{Binding Received_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Factory_Ship_Date" Binding="{Binding Factory_Ship_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Number_of_Orders" Binding="{Binding Number_of_Orders}"/>
+                    <DataGridTextColumn Header="Number_of_Available_Instructions" Binding="{Binding Number_of_Available_Instructions}"/>
+                    <DataGridTextColumn Header="Line" Binding="{Binding Line}"/>
+                    <DataGridTextColumn Header="Material_text1" Binding="{Binding Material_text1}"/>
+                    <DataGridTextColumn Header="Inner_Code" Binding="{Binding Inner_Code}"/>
+                    <DataGridTextColumn Header="Hobbing" Binding="{Binding Hobbing}"/>
+                    <DataGridTextColumn Header="TeethQuantity" Binding="{Binding TeethQuantity}"/>
+                    <DataGridTextColumn Header="TeethShape" Binding="{Binding TeethShape}"/>
+                    <DataGridTextColumn Binding="{Binding No}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Repairs}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Instructions}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding PayWard}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Major}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Special_Orders}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Method}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Destination}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Instructions_Print_date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_progress}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Tack_Label_Output_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Completion_Instruction_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Re_print_Count}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_issue_time}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Classify_Code}" Visibility="Collapsed"/>
+
+                </DataGrid.Columns>
+
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#7E75FF" />
+                        <Setter Property="Foreground" Value="#ffffff"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Height="50" Width="100" IsEnabled="{Binding CNCHob_IsGettingData}" Command="{Binding CommandCNCPrintHob, Source={StaticResource vmOrder}}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource multiCommandParamsConverter}">
+                            <Binding ElementName="wbCNCHob"/>
+                            <Binding ElementName="dgvCNCHob"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Width="28" Height="28" />
+                        <TextBlock Text="PRINT"/>
+                        <ProgressBar Margin="2"
+                      Style="{StaticResource MaterialDesignCircularProgressBar}"
+                      Value="0"
+                      IsIndeterminate="{Binding CNCHob_IsPrinting}" Foreground="#F5665F" FontSize="9"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0">
+                <TextBlock Text="Pre-TeethShape: "/>
+                <TextBlock Text="{Binding HobCNC_TeethShape}"/>
+                <TextBlock Text=" | "/>
+                <TextBlock Text="Pre-TeethQuantity: "/>
+                <TextBlock Text="{Binding HobCNC_TeethQty}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Text="{Binding CNC_HobStatus,Source={StaticResource vmOrder}}" Foreground="#EC5370" Margin="5,0,0,0" Height="25" />
+            <TextBlock Grid.Row="4" Text="CNC" HorizontalAlignment="Center" FontSize="24"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Name="dgvCNCNoHob" Grid.Row="0" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0" ItemsSource="{Binding ListOrdersCNCNoHob}" SelectedItem="{Binding SelectedOrderCNCNoHob}"  IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanUserSortColumns="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Sales_Order_No" Binding="{Binding Sales_Order_No}"/>
+                    <DataGridTextColumn Header="Pier_Instruction_No" Binding="{Binding Pier_Instruction_No}"/>
+                    <DataGridTextColumn Header="Manufa_Instruction_No" Binding="{Binding Manufa_Instruction_No}"/>
+                    <DataGridTextColumn Header="Global_Code" Binding="{Binding Global_Code}"/>
+                    <DataGridTextColumn Header="Item_Name" Binding="{Binding Item_Name}"/>
+                    <DataGridTextColumn Header="MC" Binding="{Binding MC}"/>
+                    <DataGridTextColumn Header="Received_Date" Binding="{Binding Received_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Factory_Ship_Date" Binding="{Binding Factory_Ship_Date,StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="Number_of_Orders" Binding="{Binding Number_of_Orders}"/>
+                    <DataGridTextColumn Header="Number_of_Available_Instructions" Binding="{Binding Number_of_Available_Instructions}"/>
+                    <DataGridTextColumn Header="Line" Binding="{Binding Line}"/>
+                    <DataGridTextColumn Header="Material_text1" Binding="{Binding Material_text1}"/>
+                    <DataGridTextColumn Header="Inner_Code" Binding="{Binding Inner_Code}"/>
+                    <DataGridTextColumn Header="Hobbing" Binding="{Binding Hobbing}"/>
+                    <DataGridTextColumn Header="TeethQuantity" Binding="{Binding TeethQuantity}"/>
+                    <DataGridTextColumn Header="TeethShape" Binding="{Binding TeethShape}"/>
+                    <DataGridTextColumn Binding="{Binding No}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Repairs}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Number_of_Instructions}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding PayWard}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Major}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Special_Orders}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Method}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Destination}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Instructions_Print_date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_progress}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Tack_Label_Output_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Completion_Instruction_Date}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Re_print_Count}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Latest_issue_time}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit2}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit3}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit4}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit5}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_code6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Material_text6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Amount_used6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Unit6}" Visibility="Collapsed"/>
+                    <DataGridTextColumn Binding="{Binding Classify_Code}" Visibility="Collapsed"/>
+
+                </DataGrid.Columns>
+
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#7E75FF" />
+                        <Setter Property="Foreground" Value="#ffffff"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Height="50" Width="100" IsEnabled="{Binding CNCNoHob_IsGettingData}" Command="{Binding CommandCNCPrintNoHob, Source={StaticResource vmOrder}}">
+                    <Button.CommandParameter>
+                        <Binding ElementName="wbCNCNoHob"/>
+                    </Button.CommandParameter>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Width="28" Height="28" />
+                        <TextBlock Text="PRINT"/>
+                        <ProgressBar Margin="2"
+                      Style="{StaticResource MaterialDesignCircularProgressBar}"
+                      Value="0"
+                      IsIndeterminate="{Binding CNCNoHob_IsPrinting}" Foreground="#F5665F" FontSize="9"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" DataContext="{StaticResource vmOrder}" Margin="5,0,0,0">
+                <TextBlock Text="Pre-TeethShape: "/>
+                <TextBlock Text="{Binding NoHobCNC_TeethShape}"/>
+                <TextBlock Text=" | "/>
+                <TextBlock Text="Pre-TeethQuantity: "/>
+                <TextBlock Text="{Binding NoHobCNC_TeethQty}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Text="{Binding CNC_NoHobStatus,Source={StaticResource vmOrder}}" Foreground="#EC5370" Margin="5,0,0,0" Height="25" />
+            <TextBlock Grid.Row="4" Text="CNC" HorizontalAlignment="Center" FontSize="24"/>
+        </Grid>
+        
+        <WebBrowser Name="wbBWHob" Grid.Row="1" Grid.Column="1" Visibility="Collapsed"/>
+        <WebBrowser Name="wbBWNoHob" Grid.Row="2" Grid.Column="1"  Visibility="Collapsed"/>
+        <WebBrowser Name="wbCNCHob" Grid.Row="1" Grid.Column="2" Visibility="Collapsed"/>
+        <WebBrowser Name="wbCNCNoHob" Grid.Row="2" Grid.Column="2" Visibility="Collapsed"/>
+    </Grid>
+</Window>

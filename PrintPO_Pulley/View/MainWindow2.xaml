@@ -1,0 +1,36 @@
+﻿<Window x:Class="BFDataCrawler.View.MainWindow2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BFDataCrawler.View"
+        mc:Ignorable="d"
+        xmlns:vd="clr-namespace:BFDataCrawler.View.ViewDetail"
+        Title="Pulley's PO automation printing" Height="450" Width="800">
+    <Grid Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+           
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+           
+        </Grid.ColumnDefinitions>
+        <!--<vd:BWWindow Grid.Row="0" Grid.Column="0"/>
+        <vd:CNCWindow Grid.Row="0" Grid.Column="1"/>-->
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Background="#EAF7F2">
+            <!--<TextBlock Text="BW" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="#EAF7F2">
+            <!--<TextBlock Text="CNC" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right">
+            <TextBlock Text="Cập nhật 06-03-2021"/>
+        </StackPanel>
+    </Grid>
+</Window>
